@@ -1,0 +1,226 @@
+@extends('web.layouts.mainlayout')
+{{-- @include('web.layouts.sidebar') --}}
+@section('content')
+@php
+    $current_route = request()->route()->getName();
+@endphp
+<style>
+	.fixed-slider {
+    min-height: 100vh;
+    max-height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+#slider-part,
+.single-slider {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Make the video cover the entire container */
+.video-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -1; /* Keeps it behind content if any */
+}
+
+</style>
+<!--====== SLIDER PART START ======-->
+<section id="slider-part" class="slider-active">
+    <!-- Welcome Slide with video -->
+    <div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative slider-intro">
+        <video autoplay muted loop playsinline class="video-background">
+            <source src="{{ asset('storage/public/Uploads/Videos/banner_video.mp4') }}" type="video/mp4">
+            {{-- Your browser does not support the video tag. --}}
+        </video>
+    </div>
+
+	{{-- <div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" 
+			style="background-image: url('');" >
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-7 col-lg-9">
+					<div class="slider-cont">
+						<!-- Optional article content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> --}}
+
+</section>
+
+
+<section id="courses-part" class="pb-120 gray-bg">
+    <div class="container">
+        <div class="col-lg-5">
+            <div class="section-title  pt-35 pb-35">
+                <h5>News</h5>
+                <h2>Latest Update</h2>
+            </div>
+        </div>
+
+		@php
+			use Illuminate\Support\Str;
+		@endphp
+
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="courses-grid" role="tabpanel">
+				<div class="row">
+					@foreach($article->take(3) as $art)
+					@php
+						$date = date("M d, Y", strtotime($art->created_at));
+						$title = $art->title;
+						$artid = $art->id;
+						$image = $art->thumbnail == '' 
+							? asset('Uploads/default-thumbnail.png') 
+							: asset("Uploads/News/thumbnail/{$art->thumbnail}");
+						$contentFilePath = public_path("Uploads/News/content/{$art->content}");
+						$maxWords = 25;
+						$excerpt = 'Content not available';
+
+						if (file_exists($contentFilePath)) {
+							$text = strip_tags(file_get_contents($contentFilePath));
+							$words = explode(' ', $text);
+							if (count($words) > $maxWords) {
+								$excerpt = implode(' ', array_slice($words, 0, $maxWords)) . '...';
+								$readMoreLink = ' <a href="' . route('view-article', ['id' => $artid]) . '" style="color: #28a745; text-decoration: none;">Read More</a>';
+								$excerpt .= $readMoreLink;
+							} else {
+								$excerpt = $text;
+							}
+						}
+					@endphp
+					<div class="col-lg-4 col-md-6">
+						<div class="singel-course mt-30">
+							<div class="thum">
+								<div class="image">
+									<img src="{{ $image }}" alt="Article Thumbnail">
+								</div>
+							</div>
+							<div class="cont">
+								<hr>
+								<small><i class="fa fa-calendar"></i> {{ $date }}</small>
+								<a href="{{ route('view-article', ['id' => $artid]) }}">
+									<h4>{{ $title }}</h4>
+								</a>
+								<p style="text-align: justify;">{!! $excerpt !!}</p>
+							</div>
+						</div>
+					</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
+
+        <div class="row">
+            <div class="col-lg-12">
+				@if ($article->hasPages())
+					<nav class="courses-pagination mt-50">
+						<ul class="pagination justify-content-center">
+
+							{{-- Previous Page Link --}}
+							@if ($article->onFirstPage())
+								<li class="page-item disabled">
+									{{-- <span><i class="fa fa-angle-left"></i></span> --}}
+								</li>
+							@else
+								<li class="page-item">
+									<a href="{{ $article->previousPageUrl() }}" aria-label="Previous">
+										<i class="fa fa-angle-left"></i>
+									</a>
+								</li>
+							@endif
+
+							{{-- Page Number Links (3 max shown) --}}
+							@php
+								$current = $article->currentPage();
+								$last = $article->lastPage();
+								$start = max($current - 1, 1);
+								$end = min($start + 2, $last);
+
+								if ($end - $start < 2) {
+									$start = max($end - 2, 1);
+								}
+							@endphp
+
+							@for ($page = $start; $page <= $end; $page++)
+								<li class="page-item {{ $page == $current ? 'active' : '' }}">
+									<a href="{{ $article->url($page) }}" class="{{ $page == $current ? 'active' : '' }}">
+										{{ $page }}
+									</a>
+								</li>
+							@endfor
+
+							{{-- Next Page Link --}}
+							@if ($article->hasMorePages())
+								<li class="page-item">
+									<a href="{{ $article->nextPageUrl() }}" aria-label="Next">
+										<i class="fa fa-angle-right"></i>
+									</a>
+								</li>
+							@else
+								<li class="page-item disabled">
+									<span><i class="fa fa-angle-right"></i></span>
+								</li>
+							@endif
+
+						</ul>
+					</nav>
+				@endif
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/bg-hive.jpg') }}') no-repeat center center; background-size: cover;">
+    <div class="container">
+        <div class="hive-container">
+            <div class="row-hive row1">
+                <div class="hex planning transparent"><div><h4></h4><span></span></div></div>
+                <div class="hex qs"><div><h4></h4><span></span></div></div>
+                <div class="hex audit transparent"><div><h4></h4><span></span></div></div>
+            </div>
+            <div class="row-hive offset">
+                <div class="hex admin transparent"><div><h4></h4><span></span></div></div>
+                <div class="hex the"><div><h4></h4><span></span></div></div>
+                <div class="hex uigreen"><div><h4></h4><span></span></div></div>
+                <div class="hex rnd transparent"><div><h3>CPSU SECURES 158TH SPOT IN THE WURI RANKING 2023</h3><span></span></div></div>
+            </div>
+            <div class="row-hive row3">
+                <div class="hex tuv"><div><h4></h4><span></span></div></div>
+                <div class="hex it transparent"><div><h4></h4><span></span></div></div>
+                <div class="hex wuri"><div><h4></h4><span></span></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="patnar-logo" class="pt-40 pb-80 gray-bg">
+    <div class="container">
+        <div class="row patnar-slied justify-content-center">
+            @for ($i = 1; $i <= 7; $i++)
+                <div class="col-auto">
+                    <div class="singel-patnar text-center">
+                        <img src="{{ asset('images/patnar-logo/' . $i . '.png') }}" alt="Logo" class="patnar-img">
+                    </div>
+                </div>
+            @endfor
+        </div>
+    </div>
+</div>
+
+@endsection
