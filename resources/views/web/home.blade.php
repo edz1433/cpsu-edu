@@ -115,56 +115,59 @@
                 <div class="section-title pb-45">
                     <h5>Our Article</h5>
                     <h2>Featured Articles</h2>
-                </div> <!-- section title -->
+                </div>
             </div>
-        </div> <!-- row -->
+        </div>
         
         <div class="row course-slied mt-30">
-            @foreach($article->take(10) as $art)
-                @php
-                    $date = date("M d, Y", strtotime($art->created_at));
-                    $title = $art->title;
-                    $artid = $art->id;
-                    $image = $art->thumbnail == '' 
-                        ? asset('Uploads/default-thumbnail.png') 
-                        : asset("Uploads/News/thumbnail/{$art->thumbnail}");
-                    $contentFilePath = public_path("Uploads/News/content/{$art->content}");
-                    $maxWords = 25;
-                    $excerpt = 'Content not available';
+			@foreach($article->take(10) as $art)
+				@php
+					$thumbnailPath = public_path("Uploads/News/thumbnail/{$art->thumbnail}");
+				@endphp
+				@continue(empty($art->thumbnail) || !file_exists($thumbnailPath)) {{-- Skip if thumbnail field is empty or file doesn't exist --}}
 
-                    if (file_exists($contentFilePath)) {
-                        $text = strip_tags(file_get_contents($contentFilePath));
-                        $words = explode(' ', $text);
-                        if (count($words) > $maxWords) {
-                            $excerpt = implode(' ', array_slice($words, 0, $maxWords)) . '...';
-                            $readMoreLink = ' <a href="' . route('view-article', ['id' => $artid]) . '" style="color: #28a745; text-decoration: none;">Read More</a>';
-                            $excerpt .= $readMoreLink;
-                        } else {
-                            $excerpt = $text;
-                        }
-                    }
-                @endphp
+				@php
+					$date = date("M d, Y", strtotime($art->created_at));
+					$title = $art->title;
+					$artid = $art->id;
+					$image = asset("Uploads/News/thumbnail/{$art->thumbnail}");
+					$contentFilePath = public_path("Uploads/News/content/{$art->content}");
+					$maxWords = 25;
+					$excerpt = 'Content not available';
 
-                <div class="col-lg-4">
-                    <div class="singel-course mt-30">
-                        <div class="thum">
-                            <div class="image">
-                                <img src="{{ $image }}" alt="Article Thumbnail">
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <hr>
-                            <small><i class="fa fa-calendar"></i> {{ $date }}</small>
-                            <a href="{{ route('view-article', ['id' => $artid]) }}">
-                                <h4>{{ $title }}</h4>
-                            </a>
-                            <p style="text-align: justify;">{!! $excerpt !!}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div> <!-- course-slied -->
-    </div> <!-- container -->
+					if (file_exists($contentFilePath)) {
+						$text = strip_tags(file_get_contents($contentFilePath));
+						$words = explode(' ', $text);
+						if (count($words) > $maxWords) {
+							$excerpt = implode(' ', array_slice($words, 0, $maxWords)) . '...';
+							$readMoreLink = ' <a href="' . route('view-article', ['id' => $artid]) . '" style="color: #28a745; text-decoration: none;">Read More</a>';
+							$excerpt .= $readMoreLink;
+						} else {
+							$excerpt = $text;
+						}
+					}
+				@endphp
+
+				<div class="col-lg-4">
+					<div class="singel-course mt-30">
+						<div class="thum">
+							<div class="image">
+								<img src="{{ $image }}" alt="Article Thumbnail">
+							</div>
+						</div>
+						<div class="cont">
+							<hr>
+							<small><i class="fa fa-calendar"></i> {{ $date }}</small>
+							<a href="{{ route('view-article', ['id' => $artid]) }}">
+								<h4>{{ $title }}</h4>
+							</a>
+							<p style="text-align: justify;">{!! $excerpt !!}</p>
+						</div>
+					</div>
+				</div>
+			@endforeach
+        </div>
+    </div> 
 </section>
 
 <section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/bg-hive.jpg') }}') no-repeat center center; background-size: cover;">
