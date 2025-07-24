@@ -46,8 +46,7 @@
         </video>
     </div>
 
-	{{-- <div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" 
-			style="background-image: url('');" >
+	<div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" style="background-image: url('{{ asset('Uploads/page-banner/banner-1.jpg') }}');" >
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-7 col-lg-9">
@@ -57,7 +56,55 @@
 				</div>
 			</div>
 		</div>
-	</div> --}}
+	</div>
+
+	<div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" style="background-image: url('{{ asset('Uploads/page-banner/banner-2.jpg') }}');" >
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-7 col-lg-9">
+					<div class="slider-cont">
+						<!-- Optional article content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" style="background-image: url('{{ asset('Uploads/page-banner/banner-3.jpg') }}');" >
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-7 col-lg-9">
+					<div class="slider-cont">
+						<!-- Optional article content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" style="background-image: url('{{ asset('Uploads/page-banner/banner-4.jpg') }}');" >
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-7 col-lg-9">
+					<div class="slider-cont">
+						<!-- Optional article content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="single-slider bg_cover d-flex align-items-start fixed-slider position-relative" style="background-image: url('{{ asset('Uploads/page-banner/banner-5.jpg') }}');" >
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-7 col-lg-9">
+					<div class="slider-cont">
+						<!-- Optional article content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </section>
 
@@ -67,13 +114,9 @@
         <div class="col-lg-5">
             <div class="section-title  pt-35 pb-35">
                 <h5>News</h5>
-                <h2>Latest Update</h2>
+                <h2>Featured news</h2>
             </div>
         </div>
-
-		@php
-			use Illuminate\Support\Str;
-		@endphp
 
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="courses-grid" role="tabpanel">

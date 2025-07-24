@@ -13,10 +13,10 @@ use App\Http\Controllers\autoGenController;
 
 Route::middleware(['headers.security'])->group(function () {
     Route::get('/',[WebController::class,'webHome'])->name('web-home');
-    Route::get('/view-article/{id}', [WebController::class, 'viewArticle'])->name('view-article');
+    Route::get('/view/{id}', [WebController::class, 'viewArticle'])->name('view-article');
     Route::get('/view-content/{id}', [WebController::class, 'viewContent'])->name('view-content');
-    Route::get('/search-article', [WebController::class, 'searchArticle'])->name('search-article');
-    Route::get('/view-sublink-content/{id}', [WebController::class, 'viewSublinkContent'])->name('view-sublink-content');
+    Route::get('/search', [WebController::class, 'searchArticle'])->name('search-article');
+    Route::get('/view-content/{id}', [WebController::class, 'viewSublinkContent'])->name('view-sublink-content');
     Route::get('/autogen', [autoGenController::class, 'autoGen'])->name('autoGen');
 
     //Website Admin

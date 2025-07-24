@@ -3912,15 +3912,15 @@ p.form-message.error {
 }
 
 /* Background image classes */
-.planning    { background-image: url('../images/planning.jpg'); }
+/* .planning    { background-image: url('../images/planning.jpg'); } */
 .qs          { background-image: url('../images/qs.png'); }
-.audit       { background-image: url('../images/audit.jpg'); }
-.admin       { background-image: url('../images/admin.jpg'); }
+/* .audit       { background-image: url('../images/audit.jpg'); } */
+/* .admin       { background-image: url('../images/admin.jpg'); } */
 .tuv         { background-image: url('../images/tuv.png'); }
 .uigreen     { background-image: url('../images/uigreen.png'); }
-.rnd         { background-image: url('../images/rnd.jpg'); }
+/* .rnd         { background-image: url('../images/rnd.jpg'); } */
 .the         { background-image: url('../images/the.png'); }
-.it          { background-image: url('../images/it.jpg'); }
+/* .it          { background-image: url('../images/it.jpg'); } */
 .wuri        { background-image: url('../images/wuri.png'); }
 
 .transparent {
