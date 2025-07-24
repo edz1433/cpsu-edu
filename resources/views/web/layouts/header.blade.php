@@ -183,7 +183,17 @@
                                                 <ul>
                                                     <li><a href="#">Extension Services</a></li>
                                                     <li><a href="#">Research & Development</a></li>
-                                                    <li><a href="#">Research & Extension Services</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul>
+                                                    <li><a href="#">Research Services</a></li>
+                                                    <li><a href="#">Functional org structure </a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul>
+                                                    <li><a href="#">Activities </a></li>
                                                 </ul>
                                             </li>
                                         </ul>

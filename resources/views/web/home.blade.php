@@ -108,125 +108,63 @@
 
 </section>
 
-
-<section id="courses-part" class="pb-120 gray-bg">
+<section id="course-part" class="pt-115 pb-120 gray-bg">
     <div class="container">
-        <div class="col-lg-5">
-            <div class="section-title  pt-35 pb-35">
-                <h5>News</h5>
-                <h2>Featured news</h2>
-            </div>
-        </div>
-
-		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="courses-grid" role="tabpanel">
-				<div class="row">
-					@foreach($article->take(3) as $art)
-					@php
-						$date = date("M d, Y", strtotime($art->created_at));
-						$title = $art->title;
-						$artid = $art->id;
-						$image = $art->thumbnail == '' 
-							? asset('Uploads/default-thumbnail.png') 
-							: asset("Uploads/News/thumbnail/{$art->thumbnail}");
-						$contentFilePath = public_path("Uploads/News/content/{$art->content}");
-						$maxWords = 25;
-						$excerpt = 'Content not available';
-
-						if (file_exists($contentFilePath)) {
-							$text = strip_tags(file_get_contents($contentFilePath));
-							$words = explode(' ', $text);
-							if (count($words) > $maxWords) {
-								$excerpt = implode(' ', array_slice($words, 0, $maxWords)) . '...';
-								$readMoreLink = ' <a href="' . route('view-article', ['id' => $artid]) . '" style="color: #28a745; text-decoration: none;">Read More</a>';
-								$excerpt .= $readMoreLink;
-							} else {
-								$excerpt = $text;
-							}
-						}
-					@endphp
-					<div class="col-lg-4 col-md-6">
-						<div class="singel-course mt-30">
-							<div class="thum">
-								<div class="image">
-									<img src="{{ $image }}" alt="Article Thumbnail">
-								</div>
-							</div>
-							<div class="cont">
-								<hr>
-								<small><i class="fa fa-calendar"></i> {{ $date }}</small>
-								<a href="{{ route('view-article', ['id' => $artid]) }}">
-									<h4>{{ $title }}</h4>
-								</a>
-								<p style="text-align: justify;">{!! $excerpt !!}</p>
-							</div>
-						</div>
-					</div>
-					@endforeach
-				</div>
-			</div>
-		</div>
-
         <div class="row">
-            <div class="col-lg-12">
-				@if ($article->hasPages())
-					<nav class="courses-pagination mt-50">
-						<ul class="pagination justify-content-center">
-
-							{{-- Previous Page Link --}}
-							@if ($article->onFirstPage())
-								<li class="page-item disabled">
-									{{-- <span><i class="fa fa-angle-left"></i></span> --}}
-								</li>
-							@else
-								<li class="page-item">
-									<a href="{{ $article->previousPageUrl() }}" aria-label="Previous">
-										<i class="fa fa-angle-left"></i>
-									</a>
-								</li>
-							@endif
-
-							{{-- Page Number Links (3 max shown) --}}
-							@php
-								$current = $article->currentPage();
-								$last = $article->lastPage();
-								$start = max($current - 1, 1);
-								$end = min($start + 2, $last);
-
-								if ($end - $start < 2) {
-									$start = max($end - 2, 1);
-								}
-							@endphp
-
-							@for ($page = $start; $page <= $end; $page++)
-								<li class="page-item {{ $page == $current ? 'active' : '' }}">
-									<a href="{{ $article->url($page) }}" class="{{ $page == $current ? 'active' : '' }}">
-										{{ $page }}
-									</a>
-								</li>
-							@endfor
-
-							{{-- Next Page Link --}}
-							@if ($article->hasMorePages())
-								<li class="page-item">
-									<a href="{{ $article->nextPageUrl() }}" aria-label="Next">
-										<i class="fa fa-angle-right"></i>
-									</a>
-								</li>
-							@else
-								<li class="page-item disabled">
-									<span><i class="fa fa-angle-right"></i></span>
-								</li>
-							@endif
-
-						</ul>
-					</nav>
-				@endif
-
-
+            <div class="col-lg-6">
+                <div class="section-title pb-45">
+                    <h5>Our Article</h5>
+                    <h2>Featured Articles</h2>
+                </div> <!-- section title -->
             </div>
-        </div>
-    </div>
+        </div> <!-- row -->
+        
+        <div class="row course-slied mt-30">
+            @foreach($article->take(10) as $art)
+                @php
+                    $date = date("M d, Y", strtotime($art->created_at));
+                    $title = $art->title;
+                    $artid = $art->id;
+                    $image = $art->thumbnail == '' 
+                        ? asset('Uploads/default-thumbnail.png') 
+                        : asset("Uploads/News/thumbnail/{$art->thumbnail}");
+                    $contentFilePath = public_path("Uploads/News/content/{$art->content}");
+                    $maxWords = 25;
+                    $excerpt = 'Content not available';
+
+                    if (file_exists($contentFilePath)) {
+                        $text = strip_tags(file_get_contents($contentFilePath));
+                        $words = explode(' ', $text);
+                        if (count($words) > $maxWords) {
+                            $excerpt = implode(' ', array_slice($words, 0, $maxWords)) . '...';
+                            $readMoreLink = ' <a href="' . route('view-article', ['id' => $artid]) . '" style="color: #28a745; text-decoration: none;">Read More</a>';
+                            $excerpt .= $readMoreLink;
+                        } else {
+                            $excerpt = $text;
+                        }
+                    }
+                @endphp
+
+                <div class="col-lg-4">
+                    <div class="singel-course mt-30">
+                        <div class="thum">
+                            <div class="image">
+                                <img src="{{ $image }}" alt="Article Thumbnail">
+                            </div>
+                        </div>
+                        <div class="cont">
+                            <hr>
+                            <small><i class="fa fa-calendar"></i> {{ $date }}</small>
+                            <a href="{{ route('view-article', ['id' => $artid]) }}">
+                                <h4>{{ $title }}</h4>
+                            </a>
+                            <p style="text-align: justify;">{!! $excerpt !!}</p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div> <!-- course-slied -->
+    </div> <!-- container -->
 </section>
 
 <section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/bg-hive.jpg') }}') no-repeat center center; background-size: cover;">
