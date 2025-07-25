@@ -2,24 +2,29 @@
 {{-- @include('web.layouts.sidebar') --}}
 @section('content')
 @php
-    $current_route = request()->route()->getName();
+$current_route = request()->route()->getName();
 
-	// Get keywords from current article title (e.g., significant words only)
-    $keywords = collect(explode(' ', $article->title))
-        ->filter(function ($word) {
-            return strlen($word) > 3; // Ignore short/common words like "at", "the", etc.
-        });
+// Normalize and extract significant keywords from title
+$keywords = collect(explode(' ', strtolower($article->title)))
+    ->filter(fn($word) => strlen($word) > 3)
+    ->values();
 
-    // Filter related articles based on keyword match (excluding the current article)
-    $relatedArticles = $articles->filter(function ($art) use ($keywords, $article) {
+$relatedArticles = $articles
+    ->filter(function ($art) use ($keywords, $article) {
         if ($art->id === $article->id) return false;
-        foreach ($keywords as $keyword) {
-            if (stripos($art->title, $keyword) !== false) {
-                return true;
-            }
-        }
-        return false;
-    })->shuffle()->take(2);
+
+        // Count how many keywords appear in the title (case-insensitive)
+        $titleLower = strtolower($art->title);
+        $matchCount = $keywords->filter(fn($keyword) => str_contains($titleLower, $keyword))->count();
+
+        return $matchCount > 0;
+    })
+    // Rank by number of keyword matches
+    ->sortByDesc(function ($art) use ($keywords) {
+        $titleLower = strtolower($art->title);
+        return $keywords->filter(fn($keyword) => str_contains($titleLower, $keyword))->count();
+    })
+    ->take(3);
 @endphp
 <section id="corses-singel" class="pt-40 pb-120" style="background-image: url('{{ asset('images/bg-article.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 30px;">
 	<div class="container">
@@ -51,9 +56,9 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-6">
 						<div class="course-features" style="background-color: transparent !important;">
-							<h4>RECENT ARTICLES</h4>
-							
-							@foreach ($articles->take(5) as $art)
+							<h4>RECENT NEWS</h4>
+
+							@foreach ($articles->take(10) as $art)
 								<p>
 									<a href="{{ route('view-article', ['id' => $art->id]) }}" style="color: inherit; text-decoration: none;">
 										{{ $art->title }}

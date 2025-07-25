@@ -113,13 +113,13 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="section-title pb-45">
-                    <h5>Our Article</h5>
-                    <h2>Featured Articles</h2>
+                    <h5>Our News</h5>
+                    <h2>Featured News</h2>
                 </div>
             </div>
         </div>
         
-        <div class="row course-slied mt-30">
+        <div class="row course-slied mt-10">
 			@foreach($article->take(10) as $art)
 				@php
 					$thumbnailPath = public_path("Uploads/News/thumbnail/{$art->thumbnail}");
@@ -167,7 +167,35 @@
 				</div>
 			@endforeach
         </div>
+		<div class="row mt-3">
+            <div class="col-12 text-center">
+                <button id="load-more" class="btn btn-outline-success px-4 py-2">
+                    <i class="fa fa-refresh"></i> More News
+                </button>
+            </div>
+        </div>
     </div> 
+</section>
+
+<section id="about-page" class="pt-70 pb-110">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-7">
+				<div class="about-image mt-50 hover-effect">
+					<a href="#">
+						<img src="{{ asset('images/academic calendar.jpg') }}" alt="About">
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-5">
+				<div class="about-image hover-effect">
+					<a href="#">
+						<img src="{{ asset('images/hiring logo.png') }}" alt="About">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/bg-hive.jpg') }}') no-repeat center center; background-size: cover;">
@@ -197,9 +225,9 @@
     <div class="container">
         <div class="row patnar-slied justify-content-center">
             @for ($i = 1; $i <= 7; $i++)
-                <div class="col-auto">
+                <div class="col-auto logo-col">
                     <div class="singel-patnar text-center">
-                        <img src="{{ asset('images/patnar-logo/' . $i . '.png') }}" alt="Logo" class="patnar-img">
+                        <img src="{{ asset('images/patnar-logo/' . $i . '.png') }}" alt="Logo" class="patnar-img small-logo	">
                     </div>
                 </div>
             @endfor

@@ -6,8 +6,11 @@
                 <!-- About -->
                 <div class="col-lg-5 col-md-6">
                     <div class="footer-about mt-30">
+                        <div class="logo">
+                            <a href="#"><img src="{{ asset('images/logo-header.png') }}" alt="Logo"></a>
+                        </div>
                         <p>
-                            <b>Central Philippines State University (CPSU)</b> <br>is a catalyst for change in Negros Occidental—empowering communities through innovation, education, and agriculture. With 10 ISO-accredited campuses, CPSU transforms local potential into lasting impact.
+                            <b>Central Philippines State University (CPSU)</b> <br>is a catalyst for change in Negros Occidental empowering communities through innovation, education, and agriculture. With 10 ISO-accredited campuses, CPSU transforms local potential into lasting impact.
                         </p>
                         <ul class="mt-20">
                             <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
