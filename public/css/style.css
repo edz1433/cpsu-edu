@@ -1770,12 +1770,12 @@ p {
     left: -100%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(
+    /* background: linear-gradient(
         120deg,
         rgba(255, 255, 255, 0) 30%,
         rgba(255, 255, 255, 0.2) 50%,
         rgba(255, 255, 255, 0) 70%
-    );
+    ); */
     transform: rotate(25deg);
     transition: all 0.5s ease-in-out;
     pointer-events: none;
@@ -3916,7 +3916,7 @@ p.form-message.error {
 .hex {
     width: 258px;
     height: 254px;
-    background-color: #ffffff;
+    background-color: #ffffffb0;
     background-size: 96%; /* simulate inner margin */
     background-repeat: no-repeat;
     background-position: center;

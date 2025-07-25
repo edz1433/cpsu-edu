@@ -30,28 +30,31 @@ $relatedArticles = $articles
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
-					@php
-						$thumbnail = $article->thumbnail == '' 
-							? asset('Uploads/default-thumbnail.png') 
-							: asset("Uploads/News/thumbnail/{$article->thumbnail}");
-					@endphp
+				@php
+					$thumbnail = $article->thumbnail == '' 
+						? asset('Uploads/default-thumbnail.png') 
+						: asset("Uploads/News/thumbnail/{$article->thumbnail}");
 
-					<div class="corses-singel-left" style="background-color: transparent !important;">
-										
-						<div class="corses-singel-image">
-							<img src="{{ $thumbnail }}" alt="Courses">
-						</div>
+					// Load and clean content
+					$content = file_get_contents('Uploads/News/content/' . $article->content);
 
-						<div class="title pt-2">
-							<h5>{{ $article->title }}</h5>
-						</div> 
-						<p class="pb-2">June 20, 2025</p>
-						<p>
-							@php $content = file_get_contents('Uploads/News/content/'.$article->content); @endphp
-							{!! $content !!}
-						</p>
+					// Remove all <img> tags, even with newlines or spaces
+					$content = preg_replace('/<img\b[^>]*>(?:<\/img>)?/i', '', $content);
+				@endphp
+
+				<div class="corses-singel-left" style="background-color: transparent !important;">
+					<div class="corses-singel-image">
+						<img src="{{ $thumbnail }}" alt="Courses">
 					</div>
+
+					<div class="title pt-2">
+						<h5>{{ $article->title }}</h5>
+					</div> 
+					<p class="pb-2">June 20, 2025</p>
+					<p>{!! $content !!}</p>
+				</div>
 			</div>
+
 			<div class="col-lg-4">
 				<div class="row">
 					<div class="col-lg-12 col-md-6">

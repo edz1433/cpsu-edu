@@ -177,7 +177,7 @@
     </div> 
 </section>
 
-<section id="about-page" class="pt-70 pb-110">
+<section id="about-page" class="pt-70 pb-110 bg-dark">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-7">
@@ -198,7 +198,7 @@
 	</div>
 </section>
 
-<section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/bg-hive.jpg') }}') no-repeat center center; background-size: cover;">
+<section id="testimonial" class="pt-115 pb-115" style="background: url('{{ asset('images/s-12.jpg') }}') no-repeat center center; background-size: cover;">
     <div class="container">
         <div class="hive-container">
             <div class="row-hive row1">
